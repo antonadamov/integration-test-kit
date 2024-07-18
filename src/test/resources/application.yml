@@ -11,4 +11,5 @@ spring:
       auto:
         offset:
           reset: earliest
+      wait-timeout: 5000
     topic: ${KAFKA_TOPIC:test-topic}
