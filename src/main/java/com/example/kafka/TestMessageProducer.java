@@ -19,7 +19,7 @@ public class TestMessageProducer {
     @Autowired
     KafkaTemplate<String, String> kafkaTemplate;
 
-    @Value("spring.kafka.topic")
+    @Value("${spring.kafka.topic}")
     private String topic;
 
     public void sendMessage(String key, String value){

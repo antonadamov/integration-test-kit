@@ -8,4 +8,7 @@ spring:
       group-id: ${CONSUMER_GROUP_ID:test-group}
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    topic: ${KAFKA_TOPIC:test_topic}
+      auto:
+        offset:
+          reset: earliest
+    topic: ${KAFKA_TOPIC:test-topic}

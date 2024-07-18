@@ -19,10 +19,11 @@ public class BaseTest extends AbstractTestNGSpringContextTests {
     TestMessagesConsumer consumer;
 
     @Test
-    public void test(){
+    public void test() throws InterruptedException {
         String message = "Test Message";
         String key = UUID.randomUUID().toString();
         producer.sendMessage(key, message);
+        Thread.sleep(3000);
         String consumedMessage = consumer.getMessage(key);
         Assert.assertNotNull(consumedMessage, "Message consumed");
         Assert.assertEquals(consumedMessage, message, "Consumed message text");
