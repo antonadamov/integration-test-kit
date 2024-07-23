@@ -1,5 +1,8 @@
 package com.example.utils;
 import com.example.exception.AsyncTestingFrameworkException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -36,5 +39,16 @@ public class JsonUtils {
         } catch (Exception e) {
             throw new AsyncTestingFrameworkException("Can't get JSON string from file '" + filePath + "'", e);
         }
+    }
+
+    public static String getValueFromJson(String json, String jsonPath) throws AsyncTestingFrameworkException {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Object value = JsonPath.read(json, jsonPath);
+            return objectMapper.writeValueAsString(value);
+        } catch (JsonProcessingException e) {
+            throw new AsyncTestingFrameworkException("Can't get value from json: " + json + ", using path: " + jsonPath);
+        }
+
     }
 }

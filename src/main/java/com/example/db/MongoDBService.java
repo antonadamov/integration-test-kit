@@ -1,8 +1,6 @@
 package com.example.db;
 
 import com.example.exception.AsyncTestingFrameworkException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
