@@ -13,3 +13,9 @@ spring:
           reset: earliest
       wait-timeout: 5000
     topic: ${KAFKA_TOPIC:test-topic}
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: test
+      collection: test-collection
