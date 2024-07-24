@@ -6,7 +6,7 @@ import static io.restassured.RestAssured.given;
 
 public class GetUserRequest {
 
-    private String userId;
+    private final String userId;
 
     public GetUserRequest(String userId) {
         this.userId = userId;
