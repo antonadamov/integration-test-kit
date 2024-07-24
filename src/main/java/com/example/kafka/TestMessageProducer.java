@@ -22,18 +22,26 @@ public class TestMessageProducer {
     @Value("${spring.kafka.topic}")
     private String topic;
 
-    public void sendMessage(String key, String value){
+    public SendResult<String, String> sendMessage(String key, String value) {
+        ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, key, value);
+        return sendMessage(producerRecord);
+    }
+
+    public SendResult<String, String> sendMessage(String value) {
+        ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, value);
+        return sendMessage(producerRecord);
+    }
+
+    private SendResult<String, String> sendMessage(ProducerRecord<String, String> producerRecord) {
         try {
-            ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, key, value);
             SendResult<String, String> sendResult = kafkaTemplate.send(producerRecord).get();
-            kafkaTemplate.flush();
             log.info("Message was sent:{}", sendResult);
+            return sendResult;
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new RuntimeException(e);
         }
-
     }
 }
