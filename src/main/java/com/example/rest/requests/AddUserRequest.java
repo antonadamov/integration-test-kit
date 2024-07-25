@@ -1,7 +1,6 @@
 package com.example.rest.requests;
 
 import com.example.rest.responses.AddUserResponse;
-import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
