@@ -12,11 +12,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+import static java.lang.Thread.*;
+
 @Service
 @Slf4j
 public class MongoDBService {
 
-    private MongoDatabase database;
+    private final MongoDatabase database;
 
 
     @Value("${spring.mongodb.database}")
@@ -63,9 +65,9 @@ public class MongoDBService {
                 return document;
             }
             try {
-                Thread.sleep(pollingInterval);
+                sleep(pollingInterval);
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+                currentThread().interrupt();
                 throw new AsyncTestingFrameworkException("Polling interrupted while waiting for document", e);
             }
         }
@@ -80,9 +82,9 @@ public class MongoDBService {
                 return document;
             }
             try {
-                Thread.sleep(pollingInterval);
+                sleep(pollingInterval);
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+                currentThread().interrupt();
                 throw new AsyncTestingFrameworkException("Polling interrupted while waiting for document", e);
             }
         }
