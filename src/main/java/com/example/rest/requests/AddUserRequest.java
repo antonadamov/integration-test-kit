@@ -1,5 +1,6 @@
-package com.example.rest;
+package com.example.rest.requests;
 
+import com.example.rest.responses.AddUserResponse;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
@@ -12,8 +13,8 @@ public class AddUserRequest {
         this.user = user;
     }
 
-    public Response send() {
-        return given()
+    public AddUserResponse send() {
+        return (AddUserResponse) given()
                 .header("Content-Type", "application/json")
                 .body(user)
                 .when()

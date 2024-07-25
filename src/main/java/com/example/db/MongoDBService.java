@@ -17,7 +17,7 @@ public class MongoDBService {
     private final MongoClient mongoClient;
 
 
-    @Value("${spring.data.mongodb.database}")
+    @Value("${spring.mongodb.database}")
     private String dbName;
 
     @Autowired
