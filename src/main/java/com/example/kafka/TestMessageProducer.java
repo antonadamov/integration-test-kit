@@ -18,7 +18,7 @@ public class TestMessageProducer {
 
     private static final Logger log = LoggerFactory.getLogger(TestMessageProducer.class);
 
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
     public TestMessageProducer(KafkaTemplate<String, String> kafkaTemplate) {
