@@ -16,7 +16,6 @@ import java.util.Map;
 @Slf4j
 public class MongoDBService {
 
-    private final MongoClient mongoClient;
     private MongoDatabase database;
 
 
@@ -31,7 +30,6 @@ public class MongoDBService {
 
     @Autowired
     public MongoDBService(MongoClient mongoClient) {
-        this.mongoClient = mongoClient;
         this.database = mongoClient.getDatabase(dbName);
     }
 
