@@ -1,5 +1,6 @@
 package com.example.kafka;
 
+import io.restassured.path.json.JsonPath;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,15 +31,15 @@ public class TestMessagesConsumer {
         log.info("Topic: {}. Key: {}. Value: {}", message.topic(), message.key(), message.value());
     }
 
-    public String getMessage(String key) throws InterruptedException {
+    public JsonPath getMessage(String key) throws InterruptedException {
         return getMessage(key, defaultTimeout, TimeUnit.MILLISECONDS);
     }
 
-    public String getMessage(String key, long timeout, TimeUnit unit) throws InterruptedException {
+    public JsonPath getMessage(String key, long timeout, TimeUnit unit) throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
         latches.put(key, latch);
         boolean messageReceived = latch.await(timeout, unit);
         latches.remove(key);
-        return messageReceived ? messages.get(key) : null;
+        return messageReceived ? JsonPath.from(messages.get(key)) : null;
     }
 }

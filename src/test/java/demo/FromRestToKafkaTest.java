@@ -1,6 +1,5 @@
 package demo;
 
-import com.example.db.MongoDBService;
 import com.example.kafka.TestMessagesConsumer;
 import com.example.rest.requests.AddUserRequest;
 import com.example.rest.responses.AddUserResponse;
@@ -8,7 +7,6 @@ import com.example.utils.JsonUtils;
 import com.example.utils.TestDataUtils;
 import common.BaseTest;
 import io.restassured.path.json.JsonPath;
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.testng.Assert;
@@ -17,31 +15,25 @@ import org.testng.annotations.Test;
 
 import java.util.Map;
 
-public class RequestsProcessorTest extends BaseTest {
+public class FromRestToKafkaTest extends BaseTest {
 
     @Autowired
     TestMessagesConsumer consumer;
 
-    @Autowired
-    MongoDBService dbService;
-
     @Value("${spring.test-data.user-file}")
     private String userFilePath;
-
-    @Value("${spring.mongodb.collection}")
-    private String collection;
 
     Map<String, Object> variables = TestDataUtils.getUserVariables();
 
     AddUserResponse response;
-    Document dbDocument;
+    JsonPath message;
 
     @BeforeClass
-    private void setUp(){
+    private void setUp() throws InterruptedException {
         String userJson = JsonUtils.getJsonFromTemplate(userFilePath, variables);
         AddUserRequest request = new AddUserRequest(userJson);
         response = request.send();
-        dbDocument = dbService.getDocument(collection, response.getId());
+        message = consumer.getMessage(response.getId());
     }
 
     @Test
@@ -51,22 +43,22 @@ public class RequestsProcessorTest extends BaseTest {
 
     @Test
     private void userAddedToDB() {
-        Assert.assertNotNull(dbDocument, "User added to DB");
+        Assert.assertNotNull(message, "User data message published");
     }
 
     @Test
     private void checkUserAge() {
-        Assert.assertEquals(JsonPath.from(dbDocument.toJson()).getInt("age"), variables.get("age"), "User age in DB");
+        Assert.assertEquals(message.getInt("age"), variables.get("age"), "User age in published message");
     }
 
     @Test
     private void checkUserFirstName() {
-        Assert.assertEquals(JsonPath.from(dbDocument.toJson()).getString("firstName"), variables.get("firstName"), "User first name in DB");
+        Assert.assertEquals(message.getString("firstName"), variables.get("firstName"), "User first name in published message");
     }
 
     @Test
     private void checkUserLastName() {
-        Assert.assertEquals(JsonPath.from(dbDocument.toJson()).getString("lastName"), variables.get("lastName"), "User last name in DB");
+        Assert.assertEquals(message.getString("lastName"), variables.get("lastName"), "User last name in published message");
     }
 
 }
