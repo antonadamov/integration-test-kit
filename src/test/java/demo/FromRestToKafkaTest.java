@@ -4,7 +4,7 @@ import com.example.kafka.TestMessagesConsumer;
 import com.example.rest.requests.AddUserRequest;
 import com.example.rest.responses.AddUserResponse;
 import com.example.utils.JsonUtils;
-import com.example.utils.TestDataUtils;
+import common.TestDataUtils;
 import common.BaseTest;
 import io.restassured.path.json.JsonPath;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,7 +4,7 @@ import com.example.db.DbDocument;
 import com.example.db.MongoDBService;
 import com.example.kafka.TestMessageProducer;
 import com.example.utils.JsonUtils;
-import com.example.utils.TestDataUtils;
+import common.TestDataUtils;
 import common.BaseTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
